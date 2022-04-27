@@ -1,0 +1,9 @@
+---
+
+- name: Desplegar Hadoop y crear usuario HDFS
+  hosts: all
+  roles:
+    - user_hdfs 
+    - install_hadoop
+   
+      

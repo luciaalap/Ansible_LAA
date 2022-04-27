@@ -1,0 +1,5 @@
+---
+
+directory: /home/hdfs/hadoop-3.2.2/etc/hadoop
+datanode: /home/hadoop_tmp/hdfs/datanode
+namenode: /home/hadoop_tmp/hdfs/namenode

@@ -1,0 +1,29 @@
+---
+
+- name: Crear el grupo HDFS
+  ansible.builtin.group:
+    name: "{{ group }}"
+    state: present
+
+- name: Crear el usuario HDFS
+  user:
+    name: "{{ user }}"
+    password:
+    groups:
+      - hdfs
+    state: present
+
+- name: Crear directorio del usuario
+  file:
+    path: /home/hdfs
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    state: directory
+
+- name: Acceso sin contraseña
+  authorized_key:
+    user: hdfs
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+

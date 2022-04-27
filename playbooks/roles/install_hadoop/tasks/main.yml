@@ -1,0 +1,52 @@
+---
+
+- name: Actualizar la maquina
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Instalar Java JDK
+  apt:
+    name: openjdk-8-jdk
+    state: latest
+    update_cache: yes
+
+- name: Descargar Hadoop
+  get_url:
+    url: https://archive.apache.org/dist/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz
+    dest: /home/hdfs/hadoop-3.2.2.tar.gz
+    mode: 0644
+  register: hadoop_software
+
+- name: Instalar Hadoop
+  shell: tar -xvzf /home/hdfs/hadoop-3.2.2.tar.gz -C /home/hdfs
+
+- name: Configuracion Hadoop
+  template:
+    src: templates/hadoop-env.sh
+    dest: "{{ directory }}/hadoop-env.sh"
+
+- name: Copiar fichero core-site
+  template:
+    src: templates/core-site.xml
+    dest: "{{ directory }}/core-site.xml"  
+
+- name: Copiar fichero hdfs-site
+  template:
+    src: templates/hdfs-site.xml
+    dest: "{{ directory }}/hdfs-site.xml"  
+
+- name: Copiar fichero mapred-site
+  template:
+    src: templates/mapred-site.xml
+    dest: "{{ directory }}/mapred-site.xml"
+
+- name: Copiar fichero yarn-site
+  template:
+    src: templates/yarn-site.xml
+    dest: "{{ directory }}/yarn-site.xml"
+
+
+
